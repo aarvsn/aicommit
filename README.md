@@ -120,6 +120,32 @@ Zero runtime dependencies for the default Ollama backend.
 
 ---
 
+## 🔀 Alternatives
+
+aicommit lives in a crowded space, and that's fine — these are all good:
+
+| Tool | Stack | Notes |
+|------|-------|-------|
+| [aicommits](https://github.com/Nutlope/aicommits)       | Node | most popular; many providers, Ollama too |
+| [opencommit](https://github.com/di-sukharev/opencommit) | Node | feature-rich; Claude/GPT/Ollama, GitHub Actions |
+| [gptcommit](https://github.com/zurawiki/gptcommit)      | Rust | `prepare-commit-msg` hook |
+| [CodeGPT](https://github.com/appleboy/CodeGPT)          | Go   | commits + short code review |
+
+**Why aicommit, then?** A few deliberate choices:
+
+- **Local-first, offline by default** — Ollama or in-process `llama-cpp`; no
+  cloud provider to configure, no API keys, nothing leaves your machine.
+- **Zero runtime dependencies** for the Ollama backend — just the Python
+  standard library, so it's easy to audit and quick to install.
+- **Conventional Commits** with an approve / edit / regenerate loop in `$EDITOR`.
+- **Changelog mode** — summarize a tag range straight into `CHANGELOG.md`.
+- Installs as a native `git aicommit` subcommand.
+
+Want the biggest ecosystem? Use aicommits or opencommit. Want a tiny, auditable,
+Python-native, fully-offline tool? That's aicommit.
+
+---
+
 ## 📄 License
 
 [MIT](LICENSE).

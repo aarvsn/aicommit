@@ -7,6 +7,13 @@ into per-version sections by hand.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 the project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- README: an "Alternatives" section comparing aicommit to similar tools
+  (aicommits, opencommit, gptcommit, CodeGPT) and explaining its local-first,
+  zero-dependency niche.
+
 ## [1.0.0] — 2025-12-18
 
 ### Added
