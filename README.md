@@ -33,18 +33,7 @@ git aicommit
 
 Sample interaction:
 
-```text
-────────────────────────────────────────────────────────
-proposed commit message:
-────────────────────────────────────────────────────────
-fix(parser): handle empty input gracefully
-
-- return [] instead of raising on whitespace-only files
-- add regression test for the empty-file case
-────────────────────────────────────────────────────────
-
-[ Enter = commit · e = edit · r = regenerate · q = quit ]
-```
+![git aicommit demo](docs/demo.svg)
 
 Changelog mode:
 
