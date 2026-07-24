@@ -52,6 +52,16 @@ Changelog mode:
 git aicommit changelog v0.4.0..HEAD --out CHANGELOG.md
 ```
 
+Copy the generated message to your clipboard (useful when you commit from
+another tool — IDE, GUI git client, GitHub web UI):
+
+```bash
+aicommit --print | pbcopy              # macOS
+aicommit --print | wl-copy             # Wayland
+aicommit --print | xclip -sel clip     # X11
+aicommit --print | clip                # Windows (Git Bash / WSL)
+```
+
 ---
 
 ## ⚙️ Configuration
