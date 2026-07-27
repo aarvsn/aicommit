@@ -8,9 +8,7 @@ import urllib.error
 import urllib.request
 from collections.abc import Iterator
 
-
-class OllamaError(RuntimeError):
-    """Raised when Ollama fails."""
+from aicommit.llm.exceptions import OllamaError
 
 
 class OllamaBackend:

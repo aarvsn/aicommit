@@ -4,16 +4,13 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from aicommit.llm.ollama import OllamaBackend, OllamaError
+from aicommit.llm.exceptions import LLMError, LlamaCppError, OllamaError
+from aicommit.llm.ollama import OllamaBackend
 
 
 class Backend(Protocol):
     def generate(self, prompt: str, *, temperature: float | None = None) -> str: ...
     def stream(self, prompt: str, *, temperature: float | None = None): ...
-
-
-class LLMError(RuntimeError):
-    """Raised when an LLM backend cannot be constructed."""
 
 
 def make_backend(
@@ -43,7 +40,7 @@ def make_backend(
                 temperature=temperature,
                 max_tokens=max_tokens,
             )
-        except (RuntimeError, FileNotFoundError) as e:
+        except (RuntimeError, FileNotFoundError, ImportError) as e:
             raise LLMError(
                 f"Failed to initialise llama-cpp backend: {e}"
             ) from e
@@ -57,6 +54,7 @@ def make_backend(
 __all__ = [
     "Backend",
     "LLMError",
+    "LlamaCppError",
     "OllamaBackend",
     "OllamaError",
     "make_backend",
