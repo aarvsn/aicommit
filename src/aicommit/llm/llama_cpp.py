@@ -6,9 +6,7 @@ import os
 from collections.abc import Iterator
 from typing import Any
 
-
-class LlamaCppError(RuntimeError):
-    """Raised when llama.cpp fails."""
+from aicommit.llm.exceptions import LlamaCppError
 
 
 class LlamaCppBackend:
@@ -63,9 +61,8 @@ class LlamaCppBackend:
         if n_ctx is not None:
             kwargs["n_ctx"] = n_ctx
 
-        kwargs["n_threads"] = (
-            n_threads if n_threads is not None else (os.cpu_count() or 1)
-        )
+        if n_threads is not None:
+            kwargs["n_threads"] = n_threads
 
         try:
             self.llm: Any = Llama(**kwargs)

@@ -15,8 +15,8 @@ FILE_HEADER: re.Pattern[str] = re.compile(r"(?=^diff --git )", re.MULTILINE)
 
 
 def estimate_tokens(text: str) -> int:
-    """Estimate token count from UTF-8 byte length."""
-    return max(1, (len(text.encode("utf-8")) + CHARS_PER_TOKEN - 1) // CHARS_PER_TOKEN)
+    """Estimate token count from character length."""
+    return max(1, (len(text) + CHARS_PER_TOKEN - 1) // CHARS_PER_TOKEN)
 
 
 def truncate_diff(diff: str, max_tokens: int) -> tuple[str, bool]:
@@ -82,9 +82,6 @@ def truncate_diff(diff: str, max_tokens: int) -> tuple[str, bool]:
         used += length
         kept += 1
 
-    if kept == len(file_chunks):
-        return "".join(out), False
-
     if kept > 0:
         skipped_files = len(file_chunks) - kept
         skipped_chars = sum(lengths[kept:])
@@ -115,33 +112,3 @@ def truncate_diff(diff: str, max_tokens: int) -> tuple[str, bool]:
     out.append(msg)
 
     return "".join(out), True
-
-
-def summary_for_llm(diff: str) -> str:
-    """Return a compact summary of files and line counts for very large diffs."""
-    summaries: list[str] = []
-
-    for chunk in FILE_HEADER.split(diff)[1:]:
-        lines = chunk.splitlines()
-
-        if not lines:
-            continue
-
-        header = lines[0]
-
-        additions = 0
-        deletions = 0
-
-        for line in lines:
-            if line.startswith("+++") or line.startswith("---"):
-                continue
-            if line.startswith("+"):
-                additions += 1
-            elif line.startswith("-"):
-                deletions += 1
-
-        summaries.append(
-            f"{header} (+{additions}/-{deletions})"
-        )
-
-    return "\n".join(summaries)
